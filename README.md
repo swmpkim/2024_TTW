@@ -13,7 +13,7 @@
 -   Install packages that we'll use. Copy and paste the following code into the Console pane of RStudio, and run it:
 
 ```         
-install.packages(c('tidyverse', 'here', 'janitor', 'SWMPr', 'SWMPrExtension'))
+install.packages(c('tidyverse', 'zoo', 'here', 'janitor', 'skimr', 'SWMPr', 'SWMPrExtension'))
 ```
 
 -   Download 3-5 years of data from each of (at least) two SWMP water quality stations through the CDMO's [Advanced Query System Zip Download](https://cdmo.baruch.sc.edu/aqs/zips.cfm) and put it in a place you can find it.
@@ -28,5 +28,5 @@ install.packages(c('tidyverse', 'here', 'janitor', 'SWMPr', 'SWMPrExtension'))
 | 12:00 - 12:30 | Lunch  |
 | 12:30 - 1:30  | More coding <br>      subsetting <br>      aggregating <br>      less-basic plots |
 | 1:30 - 1:45   | Break |
-| 1:45 - 2:30   | How to move forward <br> Useful packages & functions, and <br> how to find them|
+| 1:45 - 2:30   | How to move forward <br> Useful packages & functions and <br> how to find them|
 
