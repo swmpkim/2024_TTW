@@ -1,0 +1,568 @@
+---
+title: "SWMP data exploration"
+format: html
+editor: visual
+toc: true
+embed-resources: true
+message: false
+warning: false
+error: true
+---
+
+# Setup
+
+```{r}
+library(SWMPr)
+library(dplyr)
+library(skimr)
+```
+
+At this point in the workshop, we have talked about working directories, projects, and the `here` package. This file is set up to pull data files from the `data` folder in this workshop's directory.
+
+The data used to generate this file are from GNDBHWQ, GNDBHNUT, and GNDCRMET - all stations at Grand Bay.
+
+HOWEVER. The code is written in such a way that, if you put your own data files into the `data` folder, you only have to change the stations in the following code chunk to use your own data.
+
+```{r}
+stn_wq <- "gndbhwq"
+stn_nut <- "gndbhnut"
+stn_met <- "gndcrmet"
+
+data_path <- here::here("data")
+```
+
+# Import data
+
+## `SWMPr::import_local()`
+
+The wonderfully easy `SWMPr` way:
+
+```{r}
+dat_wq <- import_local(data_path,
+                       stn_wq)
+
+# note - when I'm not trying to write flexible code, I 
+# use the station name directly; e.g.
+
+# import_local(data_path, "gndbhwq")
+
+dat_nut <- import_local(data_path,
+                        stn_nut,
+                        collMethd = 1)  # grabs only
+
+dat_met <- import_local(data_path,
+                        stn_met)
+```
+
+## `read.csv()` and friends
+
+If you're not working with SWMP data, you can use other functions to read in data. `SWMPr` takes care of several things for us, and to demonstrate the difference, we'll look at a single year of nutrient data.
+
+```{r}
+bhnut <- read.csv(here::here("data", "gndbhnut2018.csv"))
+```
+
+To work with Excel files, check out the `readxl` package's `read_xlsx()` function.
+
+# Investigate the data
+
+We want to know several things once we've read in data - did it read in correctly? Do the values look right? How about column names? What is even in this data frame??
+
+As with most things in R, there are many ways to go about this. Let's examine a few.
+
+## Size, names, first few values
+
+```{r}
+dim(dat_nut)  # rows, columns
+names(dat_nut)
+
+head(dat_nut)
+```
+
+Contrast this with our other nutrient data frame.
+
+```{r}
+dim(bhnut)
+names(bhnut)
+
+head(bhnut)
+```
+
+### Sidebar: janitor::clean_names()
+
+We can easily clean up those names thanks to the `janitor` package.
+
+```{r}
+bhnut <- janitor::clean_names(bhnut)
+names(bhnut)
+```
+
+## Classes
+
+Names are different; values look the same. `SWMPr` automatically removed some columns for us, and put all names into lower case.
+
+Something that's less obvious is what `SWMPr` did to the `datetimestamp` column. Let's investigate column types in a couple of different ways:
+
+```{r}
+class(bhnut)
+class(bhnut$date_time_stamp)
+
+class(dat_nut)
+class(dat_nut$datetimestamp)
+```
+
+The `glimpse()` function from the `dplyr` package gives an overview of all columns:
+
+```{r}
+glimpse(bhnut)
+glimpse(dat_nut)
+```
+
+## General summaries
+
+And there are some different ways to see summaries:
+
+```{r}
+summary(dat_nut)  # I almost never use this function anymore
+skim(dat_nut)  # from the skimr package
+```
+
+## Basic plots
+
+Loooook at the data!
+
+```{r}
+plot(sal ~ datetimestamp, data = dat_wq)
+# we're going to talk about those weird values later
+# metadata is a beautiful thing
+
+plot(temp ~ datetimestamp, data = dat_wq)
+
+# make it a line plot instead of points
+plot(temp ~ datetimestamp, data = dat_wq,
+     type = "l")
+
+# make the line blue and add nice axis labels and a title
+plot(temp ~ datetimestamp, data = dat_wq,
+     type = "l", col = "blue",
+     xlab = "Date",
+     ylab = "Water Temperature (C)",
+     main = paste("Temp at", stn_wq))
+
+# can make other varieties of plot too  
+hist(dat_wq$temp)
+
+# change some options
+hist(dat_wq$temp,
+     breaks = 30,
+     col = "cadetblue3",
+     xlab = "Water Temperature (C)",
+     ylab = "Count",
+     main = paste("Distribution of temp at", stn_wq))
+```
+
+```{r}
+#| eval: false
+
+# notice: if you try to make a time series plot
+# on the bhnut data frame, where date is a character
+# it doesn't go well
+
+# shoot, what are the names again?
+names(bhnut)
+
+# try to plot it
+plot(chla_n ~ date_time_stamp, data = bhnut)
+```
+
+### Sidebar - `lubridate`
+
+We can turn things into dates fairly easily using the `lubridate` package. More information [online](https://lubridate.tidyverse.org/).
+
+```{r}
+bhnut$date_time_stamp <- lubridate::mdy_hm(bhnut$date_time_stamp)
+glimpse(bhnut)
+```
+
+Now we can make a plot:
+
+```{r}
+plot(chla_n ~ date_time_stamp, data = bhnut)
+```
+
+We can also pull out parts of dates, for example if we wanted to make a boxplot of chla values by year:
+
+```{r}
+dat_nut$year <- lubridate::year(dat_nut$datetimestamp)
+
+# make sure that worked
+glimpse(dat_nut)
+
+# now boxplot
+boxplot(chla_n ~ year, data = dat_nut)
+
+# dress it up
+boxplot(chla_n ~ year, data = dat_nut,
+        col = "lightgreen",
+        main = paste("Chl a at", stn_nut),
+        xlab = "Year",
+        ylab = "Chl a (ug/L)")
+
+# remove year again because for some reason it causes problems
+# in the cens_id function
+dat_nut$year <- NULL
+```
+
+# Your turn 1
+
+Use your favorite methods from above to investigate the `dat_wq` and `dat_met` data frames.
+
+```{r}
+
+```
+
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+
+# QA/QC flags and codes
+
+`SWMPr` has powerful functionality when it comes to QA/QC flags and codes.
+
+## Which flags and codes are present?
+
+```{r}
+qaqcchk(dat_nut)
+```
+
+## Which values are flagged as \<MDL?
+
+Sometimes we need to know when values are censored (below detection).
+
+```{r}
+head(cens_id(dat_nut))
+
+dat_nut <- cens_id(dat_nut, flag_type = "below") # note I only need true/false for below the MDL, not -1/0/1 like above- default was
+# checking for both above and below detection
+
+# see how that looks now
+glimpse(dat_nut)
+```
+
+## Using QA/QC flags to remove 'bad' values
+
+```{r}
+qc_nut <- qaqc(dat_nut, qaqc_keep = c("0", "-4"))
+
+# see what that did  
+glimpse(qc_nut)
+class(qc_nut)
+
+# and do it for wq and met
+qc_wq <- qaqc(dat_wq, qaqc_keep = c(0, 1))
+qc_met <- qaqc(dat_met, qaqc_keep = c(0, 1))
+```
+
+Make sure that got rid of those wacky salinity values:
+
+```{r}
+plot(sal ~ datetimestamp, data = qc_wq)
+```
+
+# Summarizing data
+
+Let's say you want monthly averages for your parameters.
+
+## With `SWMPr`
+
+```{r}
+monthly_wq <- aggreswmp(qc_wq, by = "months")
+glimpse(monthly_wq)
+
+plot(sal ~ datetimestamp, data = monthly_wq, type = "b",
+     main = "mean monthly salinity")
+```
+
+The defaults for `aggreswmp` are to run on every parameter, remove NAs, and calculate the mean. You can change that, if you want (e.g.) monthly maxima:
+
+```{r}
+mmax_wq <- aggreswmp(qc_wq, by = "months",
+                     FUN = max)
+glimpse(mmax_wq)
+# note how dates are represented - R does not have a "year-month" class
+# so the typical way to deal with monthly data is to tack on -01
+# to represent the first day of each month
+
+# note, that didn't remove NAs
+# but we can, in one of two ways
+
+# first, with just a comma
+mmax_wq <- aggreswmp(qc_wq, by = "months",
+                     FUN = max, na.rm = TRUE)
+glimpse(mmax_wq)
+
+
+# the other way is to write it as a function
+# which is what you have to do in other situations (like using the tidyverse)
+mmax_wq <- aggreswmp(qc_wq, by = "months",
+                     FUN = function(x) max(x, na.rm = TRUE))
+glimpse(mmax_wq)
+plot(sal ~ datetimestamp, data = mmax_wq, type = "b",
+     main = "max monthly salinity")
+```
+
+Note, we can put both those lines on the same plot, and we will with `ggplot2`. But first....
+
+### Totals
+
+We're not necessarily interested in average precipitation within a month; we want to know the total! Sometimes even by day! SWMPr does that too.
+
+```{r}
+daily_rain <- aggreswmp(qc_met, by = "days", params = "totprcp",
+                        FUN = sum, na.rm = TRUE)
+monthly_rain <- aggreswmp(qc_met, by = "months", params = "totprcp",
+                        FUN = sum, na.rm = TRUE)
+
+barplot(totprcp ~ datetimestamp, data = monthly_rain,
+        col = "navyblue",
+        main = paste("Total Monthly Precip at", stn_met),
+        xlab = "Month",
+        ylab = "Precip (mm)")
+```
+
+## With the tidyverse
+
+What `aggreswmp` did for us was group each month together, and then calculate the summary we told it to. We'll have to do that extra step of defining months before we can summarize with the tidyverse.
+
+We're going to pick up a couple of new skills here too, particularly use of the pipe.
+
+```{r}
+#| message: false
+#| warning: false
+
+library(tidyverse)
+library(zoo)  # for as.yearmon
+```
+
+### Pick a couple of parameters
+
+```{r}
+monthly_wq2 <- qc_wq |> 
+    mutate(month = as.yearmon(datetimestamp)) |>   # mutate will add or modify columns
+    summarize(.by = month,
+              mean_sal = mean(sal, na.rm = TRUE),
+              max_sal = max(sal, na.rm = TRUE),
+              mean_temp = mean(temp, na.rm = TRUE),
+              max_temp = max(temp, na.rm = TRUE))
+glimpse(monthly_wq2)
+
+plot(mean_sal ~ month, data = monthly_wq2, type = "b",
+     main = "mean monthly salinity")
+```
+
+## A `ggplot2` interlude
+
+`ggplot2` is a phenomenal graphing package. We don't have time here to get into all of the nuances, but we will make a few plots with the following code. The [Data visualization](https://r4ds.hadley.nz/data-visualize) chapter of [R for Data Science](https://r4ds.hadley.nz/) is a great introductory resource for learning how these pieces get put together; and [Chapter 9 (Layers)](https://r4ds.hadley.nz/layers) goes through more powerful options, including facets and smooths. [Chapter 11 (Communication)](https://r4ds.hadley.nz/communication) touches on ways to make the graphs more attractive by modifying labels, annotations, legends, and the general body of the plot.  
+
+Here, we are going to make a graph that includes lines for our monthly mean and max salinity values. We will construct it in a few different ways and start learning about the different ways to layer information together.  
+
+```{r}
+ggplot(monthly_wq2) +
+    geom_point(aes(x = month,
+                   y = mean_sal)) +
+    geom_line(aes(x = month,
+                  y = mean_sal)) +
+    labs(title = "mean monthly salinity")
+
+
+# we can move some code up into the main ggplot() line - if it will be the same on every row
+ggplot(monthly_wq2, aes(x = month, y = mean_sal)) +
+    geom_point() +
+    geom_line() +
+    labs(title = "mean monthly salinity",
+         subtitle = paste("at", stn_wq),
+         x = "Month",
+         y = "Salinity (psu)")
+
+
+# here's where we can put different lines onto the same plot
+
+# define the colors ourselves
+ggplot(monthly_wq2, aes(x = month)) +
+    geom_line(aes(y = mean_sal), 
+              col = "blue") +
+    geom_line(aes(y = max_sal), 
+              col = "darkorange")
+
+# let ggplot assign colors and make a legend
+# by putting 'col' INSIDE the aes() argument
+ggplot(monthly_wq2, aes(x = month)) +
+    geom_line(aes(y = mean_sal, 
+                  col = "mean")) +
+    geom_line(aes(y = max_sal,
+                  col = "max"))
+
+# use a different color palette - e.g. from RColorBrewer
+ggplot(monthly_wq2, aes(x = month)) +
+    geom_line(aes(y = mean_sal, 
+                  col = "mean")) +
+    geom_line(aes(y = max_sal,
+                  col = "max")) +
+    scale_color_brewer(palette = "Set1")
+
+
+# note, when you define colors inside aes(),
+# you can let it choose based on values of the data
+# e.g. censored or non-censored
+ggplot(dat_nut, aes(x = datetimestamp, 
+                    y = po4f, 
+                    col = c_po4f)) +
+    geom_point() +
+    labs(col = "PO4 below detection?")
+
+
+# you can also save a plot as an object, then add to it in different ways
+# I do this a LOT when playing with color options
+p <- ggplot(monthly_wq2, aes(x = month)) +
+    geom_line(aes(y = mean_sal, 
+                  col = "mean")) +
+    geom_line(aes(y = max_sal,
+                  col = "max"))
+
+p
+
+p <- p +
+    labs(title = paste("Salinity at", stn_wq),
+         x = "Month",
+         y = "Salinity (psu)",
+         col = "monthly value")
+
+p
+
+p + 
+    scale_color_brewer(palette = "Set1")
+
+p +
+    theme_bw()
+
+p <- p +
+    scale_color_brewer(palette = "Set1") +
+    theme_bw()
+
+p
+```
+
+## Back to summarizing - can use the same function on everything
+
+```{r}
+mmax_wq2 <- qc_wq |> 
+    mutate(month = as.yearmon(datetimestamp)) |> 
+    summarize(.by = month,
+              across(everything(),
+                     function(x) max(x, na.rm = TRUE)))
+
+# that was an interesting warning; let's check out the data frame
+glimpse(mmax_wq2)
+
+
+# notice it worked on columns we didn't care about; we can also specify
+mmax_wq2 <- qc_wq |> 
+    mutate(month = as.yearmon(datetimestamp)) |> 
+    summarize(.by = month,
+              across(c(temp, spcond, sal, do_pct, do_mgl, depth,
+                       ph, turb),
+                     function(x) max(x, na.rm = TRUE)))
+glimpse(mmax_wq2)
+# now we've done essentially the same thing that SWMPr did,
+# but in a way that can be used on non-SWMP data frames
+```
+
+Here's something that's changed though - using the tidyverse on a swmpr data frame removes the "SWMPr-ness" of the data frame:
+
+```{r}
+class(mmax_wq) # used aggreswmp
+class(mmax_wq2) # used tidyverse
+```
+
+What this means is, we can't directly use more SWMPr functions on the one where we used the tidyverse. THIS IS OKAY, as long as you're expecting it.
+
+If you want to get the SWMPr-ness back, you can turn it back into a swmpr object with the `swmpr()` function.
+
+```{r}
+# attributes are like metadata of a data frame
+attributes(mmax_wq)
+attributes(mmax_wq2)
+
+# turn it back into a swmpr object
+mmax_wq2 <- swmpr(mmax_wq2, meta_in = stn_wq)
+# if I weren't trying to be flexible, this would look like
+# mmax_wq2 <- swmpr(mmax_wq2, meta_in = "gndbhwq")
+
+
+# check the class
+class(mmax_wq2)
+
+# check the attributes now
+attributes(mmax_wq2)
+```
+
+# More SWMPr and SWMPrExtension functionality
+
+## SWMPr  
+
+If you are using your own data, you'll need to change the years that appear in the code below.  
+
+```{r}
+# make a plot like the SWMPrats widget
+plot_summary(qc_wq, param = 'sal')
+
+# make a wind rose
+plot_wind(qc_met)
+plot_wind(qc_met, type = "season")
+plot_wind(qc_met, type = "season", years = 2018:2020)
+
+# one year over historical data
+plot_quants(qc_wq, param = 'temp',
+            yr = 2020,
+            yrstart = 2018,
+            yrend = 2019)
+```
+
+## SWMPrExtension
+
+```{r}
+library(SWMPrExtension)
+```
+
+```{r}
+# similar to the last of the above
+historical_daily_range(qc_wq, param = 'temp',
+                       target_yr = 2020)
+
+# monthly ranges
+historical_range(qc_wq, param = 'temp',
+                 target_yr = 2020,
+                 hist_rng = c(2018, 2019))
+# can also include a threshold
+historical_range(qc_wq, param = 'temp',
+                 target_yr = 2020,
+                 hist_rng = c(2018, 2019),
+                 criteria = 25)
+
+# seasonal boxplot
+seasonal_boxplot(qc_wq, param = 'temp')
+
+# can add a target year to see how it compares
+seasonal_boxplot(qc_wq, param = 'temp',
+                 target_yr = 2020)
+
+# precip!
+seasonal_barplot(qc_met, param = 'totprcp')
+
+# assign seasons
+seasonal_barplot(qc_met, param = 'totprcp',
+                 season_grps = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12)),
+                 season_names = c('Winter', 'Spring', 'Summer', 'Fall'))
+```
+
+

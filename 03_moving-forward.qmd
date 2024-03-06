@@ -1,0 +1,184 @@
+---
+title: "Moving Forward in R"
+subtitle: ""
+author: Kim Cressman
+institute: "kim@catbirdstats.com"
+date: 2024-03-15
+embed-resources: true
+format: 
+    html:
+        toc: true
+    revealjs:
+        output-file: 03_slides-moving-forward.html
+        incremental: true
+        theme: solarized
+        footer: "2024 TTW"
+        code-line-numbers: true
+        slide-number: c/t
+---
+
+# Finding packages and functions
+
+## Where to look
+
+-   CRAN [task views](https://cran.r-project.org/web/views/)
+-   scientific literature
+-   use those googling skills
+
+## Finding good packages and functions
+
+-   Look for good documentation!
+    -   vignettes
+    -   blog posts about the package or function
+    -   github READMEs
+    -   package websites
+    -   help files
+-   Use what *you* can understand (and test it first)
+
+## A few package recommendations
+
+-   `stats` (base R): all the basics. `t.test`, `lm` (regression and anova)  
+-   `broom`: tidies statistical model output  
+-   `vegan`: community analyses and ordination  
+-   `EnvStats`: water quality statistics  
+-   `lme4`: mixed models (slightly less advanced functionality but much better documentation than `nlme`, the base R package for mixed models)  
+-   `mgcv`: generalized additive models  
+-   `unmarked`: occupancy analysis
+
+## People who create helpful materials
+
+-   Hadley Wickham - many helpful books\
+-   Jenny Bryan - helpful everything
+-   Gavin Simpson - youtube workshops on `vegan` package; blog posts on GAMs in `mgcv`
+-   Noam Ross - free online GAM course
+-   Thomas Lin Pederson - youtube workshops on `ggplot2` and extensions
+-   Ben Bolker - ecological stats generally; particularly mixed models
+-   links in the provided `resources_and_links` file
+
+# Troubleshooting tips
+
+## Problems in R
+
+Most of *my* problems arise from one of the following:
+
+-   R is looking in the wrong place for a file\
+-   Something is spelled wrong\
+-   "Misspellings" include forgetting what I named a variable, and trying to call it as something else\
+-   I'm trying to run a function with the wrong type of input
+
+## Major types of problem in R
+
+1.  Something isn't working.
+    a.  Spelling, punctuation, file path problem, function input problem
+    b.  More complicated errors\
+2.  You don't even know what to do.
+    a.  Is there a function to run \[this analysis\]?\
+    b.  How do I run an NMDS?\
+3.  You figure out an answer for 2, but then it doesn't work and you're back at 1.
+
+::: notes
+Notes: RStudio helps a lot with punctuation/syntax errors - tells you when something is wrong (in the left margin). Enabling "rainbow parentheses" in the global options is MAGICAL:
+
+Tools menu -- Global Options -- Code (from left pane) -- Display (a tab in main pane) -- Syntax (in the Display tab) -- bottom option: "Use rainbow parentheses"
+:::
+
+## 1. Define the problem
+
+-   What did you start with
+-   What were you trying to get
+-   What did you actually get
+-   ...and which line of code caused it?
+
+## 1b. Other defining questions
+
+-   Did you get an error message? Was it just a warning?\
+-   Did you not get output at all?\
+-   Did you get output, but it doesn't look right?\
+-   What caused the error? You may have to scroll up, if you haven't been running code line-by-line.
+
+::: notes
+Notes: running code line-by-line is GREAT for troubleshooting.
+
+The FIRST error will make a bunch of things fail downstream.
+:::
+
+## 2. Dig a little deeper
+
+Thoroughly examine your data frame.\
+
+-   Are you using the correct variable names? `names(df)`\
+-   Are your variables all the right type? (e.g. numeric)
+    -   `summary(df)`\
+    -   `dplyr::glimpse(df)`
+-   Does the problem still happen if you only use a subset of your data?
+    -   `test <- df[1:10, ]`\
+    -   `test <- df$variable[1:10]`
+
+::: notes
+:::
+
+## 3. Try to make it happen on other data
+
+Suggestions:
+
+-   `iris`
+-   `mtcars`
+-   not built-in, but awesome: `palmerpenguins`
+-   make up some data
+
+# Searching for help
+
+## Reading a help file
+
+\[We'll go through this live; including a slide for future reference\]
+
+1.  Open the help file: `?function-name`
+2.  *Usage* block at the top: what arguments is the function built for?
+3.  *Arguments*: what does all the stuff in the *usage* block actually mean?
+4.  *Examples*: run some!
+5.  *Value*: actually comes before examples, but tells you what you get from the function
+
+::: notes
+Notes: ?lm is a good help file
+
+so are stringr functions, e.g. ?str_detect is simple and clear
+:::
+
+## How to google
+
+-   Include 'r' in the search\
+-   Include the package and/or function name\
+-   If you have an error or warning message, copy and paste it in!
+-   Don't worry about terminology - you can learn it by going through results\
+-   You can ask ChatGPT in similar ways; be wary of the answers
+
+::: notes
+Notes: googling "how to put two ggplots side by side" has results with different dates - good example of how things change
+:::
+
+## Which sites are common in search results
+
+-   Stack Overflow
+-   R Bloggers
+-   Posit forums
+-   Statology
+
+## Evaluating search results
+
+-   Look for recent questions/posts
+-   Read the code in the explanation - can you understand it?
+-   Does re-running it on your computer work as expected?
+-   Only then should you try modifying it for your own data
+
+# Asking for help
+
+## Where you can ask for help
+
+-   Social media: `#rstats`
+    -   X (Twitter) / Mastodon / Bluesky (fewer R folks than Mastodon)\
+    -   Facebook groups, notably 'Ecology in R'\
+    -   LinkedIn
+-   Posit forums\
+-   Stack Overflow\
+-   R4DS online community\
+-   Various email lists: **NERRS-RLIST**!!!

@@ -1,5 +1,9 @@
 # 2024 TTW R Workshop
 
+## Description  
+
+This will be an introductory level R workshop. Substantial time will be spent on getting oriented in R and RStudio and understanding general workflows. Basic coding steps will be covered: reading data into R (including via SWMPr), exploring and subsetting data, and making simple plots. Finally, information on how to move forward with your own coding problems will be covered: how to find answers to your questions, what to look for in a package or function, and some recommendations on useful resources.  
+
 ## What you need to do before the workshop:
 
 -   Get the programs on your laptop: recent versions of R (at least 4.2.0), RTools, and RStudio. Do these installations early, as administrative privileges may be required.

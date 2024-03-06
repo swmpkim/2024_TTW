@@ -1,0 +1,140 @@
+---
+title: "Introduction to R and RStudio"
+subtitle: "Set yourself up for success"
+author: Kim Cressman
+institute: "kim@catbirdstats.com"
+date: 2024-03-15
+embed-resources: true
+format: 
+    html:
+        toc: true
+    revealjs:
+        output-file: 01_slides-intro.html
+        incremental: true
+        theme: solarized
+        footer: "2024 TTW"
+        code-line-numbers: true
+        slide-number: c/t
+---
+
+# Intro
+
+## Who's in the room
+
+. . .
+
+![](images/participant_titles.png)
+
+## Goals in the room
+
+. . .
+
+![](images/wordcloud-goals.png)
+
+## Commonalities
+
+No matter what you want to do, you need to get comfortable with a few basics first:
+
+-   Getting data into R\
+-   Making sure your data frame looks right\
+-   Working with the data:
+    -   Taking a subset\
+    -   Summarizing\
+    -   Re-shaping\
+    -   Connecting one data frame to another
+
+::: notes
+We'll be focusing mostly on the first two today.
+:::
+
+# Structure for today
+
+## Topics  
+
+-   Background and vocabulary\
+-   CODING - working with SWMP data
+    -   2 nearly identical files\
+    -   One has details; one is more of a skeleton\
+    -   Follow along however you are most comfortable\
+    -   Sticky notes - pink for "please come help me"; blue for "I successfully accomplished the task"
+-   Moving forward
+
+## Remember
+
+. . .
+
+![](images/experience%20meme.png){fig-align="center"}
+
+## And sometimes
+
+. . .
+
+![](images/new-error-meme.jpg){fig-align="center"}
+
+## Tips
+
+-   Be gentle with yourself\
+-   Be persistent\
+-   Help your neighbor\
+-   Look for commas and parentheses/brackets first - either missing or extra\
+-   Spelling and other punctuation next
+
+::: notes
+Punctuation - mainly parentheses or brackets. RStudio helps a lot with this - tells you when something is wrong (in the left margin), and enabling "rainbow parentheses" in the global options is MAGICAL.
+
+Tools menu -- Global Options -- Code (from left pane) -- Display (a tab in main pane) -- Syntax (in the Display tab) -- bottom option: "Use rainbow parentheses"
+:::
+
+# Understanding code and context  
+
+## File Types & getting meta about these slides  
+
+(so you can take notes in the R files that generated them, and render a complete document for yourself later)  
+
+-   .RProj - Project and how to open\
+-   .R - the basic "R script"\
+-   .Rmd - "RMarkdown"\
+-   .qmd - "Quarto"\
+
+. . .
+
+![](images/intro_example_files.png)
+
+::: notes
+Notes: demo .R and .qmd files; source/visual editor; and how to render.
+:::
+
+
+## Vocabulary
+
+-   function\
+-   package
+    -   CRAN\
+    -   GitHub\
+    -   others
+-   project
+-   working directory and file paths  
+    -   `getwd()`/`setwd()`\
+    -   `here::here()`\
+
+
+
+## RStudio IDE
+
+-   global settings
+-   panes\
+-   using the Environment pane to explore your workspace
+
+
+## Key "operators" in code
+
+-   assignment operator: `<-`\
+-   pipe: `|>` or `%>%`\
+-   comments: `#`
+
+## Useful keyboard shortcuts
+
+-   run a line of code: `Ctrl`/`Cmd` + `Enter`\
+-   make the assignment operator (`<-`): `Alt` + `-`\
+-   make a pipe (`|>`): `Ctrl`/`Cmd` + `Shift` + `M`
+-   see more in RStudio's 'Tools' menu; 'Keyboard Shortcuts Help'
