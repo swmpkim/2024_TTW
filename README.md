@@ -17,7 +17,7 @@ This will be an introductory level R workshop. Substantial time will be spent on
 -   Install packages that we'll use. Copy and paste the following code into the Console pane of RStudio, and run it:
 
 ```         
-install.packages(c('tidyverse', 'zoo', 'here', 'janitor', 'skimr', 'SWMPr', 'SWMPrExtension'))
+install.packages(c('tidyverse', 'zoo', 'here', 'janitor', 'skimr', 'SWMPr', 'SWMPrExtension', 'esquisse', 'ggThemeAssist'))
 ```
 
 -   Download 3-5 years of data from each of (at least) two SWMP water quality stations through the CDMO's [Advanced Query System Zip Download](https://cdmo.baruch.sc.edu/aqs/zips.cfm) and put it in a place you can find it.
