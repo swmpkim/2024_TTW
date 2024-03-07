@@ -1,6 +1,5 @@
 ---
-title: "Introduction to R and RStudio"
-subtitle: "Set yourself up for success"
+title: "Introduction and Context for R and SWMP Data"
 author: Kim Cressman
 institute: "kim@catbirdstats.com"
 date: 2024-03-15
@@ -53,9 +52,7 @@ We'll be focusing mostly on the first two today.
 
 -   Background and vocabulary\
 -   CODING - working with SWMP data
-    -   2 nearly identical files\
-    -   One has details; one is more of a skeleton\
-    -   Follow along however you are most comfortable\
+    -   learning about the code as we *do* things  
     -   Sticky notes - pink for "please come help me"; blue for "I successfully accomplished the task"
 -   Moving forward
 
