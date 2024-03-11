@@ -9,7 +9,7 @@ warning: false
 error: true
 ---
 
-link to this file on github:
+link to this file on github: https://github.com/swmpkim/2024_TTW/blob/main/02_SWMP-data-exploration.qmd
 
 # Setup
 
