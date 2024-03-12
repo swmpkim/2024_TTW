@@ -32,7 +32,7 @@ execute:
 
 # General Resources
 
--   [**Posit cheat sheets**](https://posit.co/resources/cheatsheets/) - seriously, check them out
+-   [**Posit cheat sheets**](https://rstudio.github.io/cheatsheets/) - one-pagers for major packages. seriously, check them out.
 
 -   [**RStudio keyboard shortcuts**](https://support.posit.co/hc/en-us/articles/200711853-Keyboard-Shortcuts)
 
@@ -134,7 +134,9 @@ Some more specialized than others
 
 ## Ecological, Environmental, and/or Water Resources Statistics
 
--   Book: [**Statistical Methods in Water Resources, 2nd ed.**](https://pubs.er.usgs.gov/publication/tm4A3) - by Dennis R. Helsel, Robert M. Hirsch, Karen R. Ryberg, Stacey A. Archfield, and Edward J. Gilroy. Amazing reference for water quality stats and code.
+-   Book: [**Statistical Methods in Water Resources, 2nd ed.**](https://pubs.er.usgs.gov/publication/tm4A3) - by Dennis R. Helsel, Robert M. Hirsch, Karen R. Ryberg, Stacey A. Archfield, and Edward J. Gilroy. Amazing reference for water quality stats and code.  
+
+-   Webinar series: [**Statistics for Data with Nondetects (Censored Data)**](https://practicalstats.com/videos/nadavids.html) - by Dennis Helsel, via his *Practical Stats* consulting firm.  
 
 -   Workshop: [**Introduction to Multivariate Data Analysis using vegan**](https://github.com/gavinsimpson/intro-vegan-webinar-july-2020) - by Gavin Simpson. `vegan` is an extremely popular package for running community analyses for ecology. Link is to GitHub repository with materials; that GitHub page links to the [recording on YouTube](youtu.be/tVnnG7mFeqA).
 
@@ -150,7 +152,7 @@ Some more specialized than others
 
 -   Class notes: [**Statistical Methods in Ecology**](https://sakai.unc.edu/access/content/group/3d1eb92e-7848-4f55-90c3-7c72a54e7e43/public/index.html) - same professor as above. More introductory.
 
-### Helpful books to get but unfortunately not freely available
+### Helpful books to get but unfortunately not free  
 
 Links lead to the publisher's page.
 
