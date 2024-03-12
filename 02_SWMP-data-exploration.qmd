@@ -165,8 +165,8 @@ You can make a scatterplot matrix with a couple different base R functions. They
 For more information on how to subset in both base R and the tidyverse, check out presentations [`02_poking_and_prodding`](https://github.com/swmpkim/2022_infrequentUseR_wrangling/blob/main/slides/02_poking_and_prodding.pdf) and [`03_modifying_and_adding`](https://github.com/swmpkim/2022_infrequentUseR_wrangling/blob/main/slides/03_modifying_and_adding.pdf) from this '[Data Wrangling for the Infrequent UseR](https://github.com/swmpkim/2022_infrequentUseR_wrangling)' workshop.
 
 ```{r}
-# what are our columns again?
-names(dat_wq)
+# what are our column names again?
+
 
 
 # let's only keep a few -
@@ -195,10 +195,10 @@ names(dat_wq)
 # it doesn't go well
 
 # shoot, what are the names again?
-names(bhnut)
 
-# try to plot it
-plot(chla_n ~ date_time_stamp, data = bhnut)
+
+# try to plot a chl time series
+
 ```
 
 We can turn things into dates fairly easily using the `lubridate` package. More information [online](https://lubridate.tidyverse.org/).

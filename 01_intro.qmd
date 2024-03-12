@@ -48,11 +48,11 @@ We'll be focusing mostly on the first two today.
 
 # Structure for today
 
-## Topics  
+## Topics
 
 -   Background and vocabulary\
 -   CODING - working with SWMP data
-    -   learning about the code as we *do* things  
+    -   learning about the code as we *do* things\
     -   Sticky notes - pink for "please come help me"; blue for "I successfully accomplished the task"
 -   Moving forward
 
@@ -82,11 +82,11 @@ Punctuation - mainly parentheses or brackets. RStudio helps a lot with this - te
 Tools menu -- Global Options -- Code (from left pane) -- Display (a tab in main pane) -- Syntax (in the Display tab) -- bottom option: "Use rainbow parentheses"
 :::
 
-# Understanding code and context  
+# Understanding code and context
 
-## File Types & getting meta about these slides  
+## File Types & getting meta about these slides
 
-(so you can take notes in the R files that generated them, and render a complete document for yourself later)  
+(so you can take notes in the R files that generated them, and render a complete document for yourself later)
 
 -   .RProj - Project and how to open\
 -   .R - the basic "R script"\
@@ -101,7 +101,6 @@ Tools menu -- Global Options -- Code (from left pane) -- Display (a tab in main 
 Notes: demo .R and .qmd files; source/visual editor; and how to render.
 :::
 
-
 ## Vocabulary
 
 -   function\
@@ -110,18 +109,26 @@ Notes: demo .R and .qmd files; source/visual editor; and how to render.
     -   GitHub\
     -   others
 -   project
--   working directory and file paths  
+-   working directory and file paths
     -   `getwd()`/`setwd()`\
     -   `here::here()`\
 
+## Punctuation vocabulary
 
+-   `'`   Single quote\
+-   `"`   Double quote\
+-   ```   Backticks\
+-   `/`   Forward Slash\
+-   `\`   Backslash\
+-   `()`  Parentheses\
+-   `[]`  Square brackets\
+-   `{}`  Curly braces
 
 ## RStudio IDE
 
 -   global settings
 -   panes\
 -   using the Environment pane to explore your workspace
-
 
 ## Key "operators" in code
 
@@ -134,4 +141,11 @@ Notes: demo .R and .qmd files; source/visual editor; and how to render.
 -   run a line of code: `Ctrl`/`Cmd` + `Enter`\
 -   make the assignment operator (`<-`): `Alt` + `-`\
 -   make a pipe (`|>`): `Ctrl`/`Cmd` + `Shift` + `M`
--   see more in RStudio's 'Tools' menu; 'Keyboard Shortcuts Help'
+-   see more in RStudio's 'Tools' menu; 'Keyboard Shortcuts Help'  
+
+## Subsetting operators  
+
+-   `$`    ---   `df$column.name`  
+-   `[rows, columns]`   ---   `df[1:6, 1:2]`  
+-   `dplyr::select()`   ---   `select(df, column.name1, column.name2)`  
+-   `dplyr::filter()`   ---   `filter(df, year >= 2015)`  

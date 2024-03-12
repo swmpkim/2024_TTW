@@ -3008,9 +3008,11 @@ vertical-align: -.125em;
   <ul class="collapse">
   <li><a href="#file-types-getting-meta-about-these-slides" id="toc-file-types-getting-meta-about-these-slides" class="nav-link" data-scroll-target="#file-types-getting-meta-about-these-slides">File Types &amp; getting meta about these slides</a></li>
   <li><a href="#vocabulary" id="toc-vocabulary" class="nav-link" data-scroll-target="#vocabulary">Vocabulary</a></li>
+  <li><a href="#punctuation-vocabulary" id="toc-punctuation-vocabulary" class="nav-link" data-scroll-target="#punctuation-vocabulary">Punctuation vocabulary</a></li>
   <li><a href="#rstudio-ide" id="toc-rstudio-ide" class="nav-link" data-scroll-target="#rstudio-ide">RStudio IDE</a></li>
   <li><a href="#key-operators-in-code" id="toc-key-operators-in-code" class="nav-link" data-scroll-target="#key-operators-in-code">Key “operators” in code</a></li>
   <li><a href="#useful-keyboard-shortcuts" id="toc-useful-keyboard-shortcuts" class="nav-link" data-scroll-target="#useful-keyboard-shortcuts">Useful keyboard shortcuts</a></li>
+  <li><a href="#subsetting-operators" id="toc-subsetting-operators" class="nav-link" data-scroll-target="#subsetting-operators">Subsetting operators</a></li>
   </ul></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="01_slides-intro.html"><i class="bi bi-file-slides"></i>RevealJS</a></li></ul></div></nav>
@@ -3186,6 +3188,26 @@ vertical-align: -.125em;
 </ul></li>
 </ul>
 </section>
+<section id="punctuation-vocabulary" class="level2">
+<h2 class="anchored" data-anchor-id="punctuation-vocabulary">Punctuation vocabulary</h2>
+<ul>
+<li><code>&#39;</code>   Single quote<br>
+</li>
+<li><code>&quot;</code>   Double quote<br>
+</li>
+<li>```   Backticks<br>
+</li>
+<li><code>/</code>   Forward Slash<br>
+</li>
+<li><code>\</code>   Backslash<br>
+</li>
+<li><code>()</code>  Parentheses<br>
+</li>
+<li><code>[]</code>  Square brackets<br>
+</li>
+<li><code>{}</code>  Curly braces</li>
+</ul>
+</section>
 <section id="rstudio-ide" class="level2">
 <h2 class="anchored" data-anchor-id="rstudio-ide">RStudio IDE</h2>
 <ul>
@@ -3214,6 +3236,18 @@ vertical-align: -.125em;
 </li>
 <li>make a pipe (<code>|&gt;</code>): <code>Ctrl</code>/<code>Cmd</code> + <code>Shift</code> + <code>M</code></li>
 <li>see more in RStudio’s ‘Tools’ menu; ‘Keyboard Shortcuts Help’</li>
+</ul>
+</section>
+<section id="subsetting-operators" class="level2">
+<h2 class="anchored" data-anchor-id="subsetting-operators">Subsetting operators</h2>
+<ul>
+<li><code>$</code>    —   <code>df$column.name</code><br>
+</li>
+<li><code>[rows, columns]</code>   —   <code>df[1:6, 1:2]</code><br>
+</li>
+<li><code>dplyr::select()</code>   —   <code>select(df, column.name1, column.name2)</code><br>
+</li>
+<li><code>dplyr::filter()</code>   —   <code>filter(df, year &gt;= 2015)</code></li>
 </ul>
 </section>
 </section>
