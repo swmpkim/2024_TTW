@@ -221,12 +221,16 @@ We can turn things into dates fairly easily using the `lubridate` package. More 
 bhnut$date_time_stamp <- lubridate::mdy_hm(bhnut$date_time_stamp)
 
 bhnut$year <- lubridate::year(bhnut$date_time_stamp)
+
+dat_nut$year <- lubridate::year(dat_nut$datetimestamp)
 ```
 
-Now we can finally make that same salinity time series plot:
+
 
 ```{r}
-
+boxplot(chla_n ~ year,
+        data = dat_nut,
+        col = "green")
 ```
 
 We can also pull out parts of dates, for example if we wanted to make a boxplot of chla values by year:
@@ -273,7 +277,10 @@ Use your favorite methods from above to investigate the `dat_wq` and `dat_met` d
 
 ```{r}
 # qaqcchk function
+qaqcchk(dat_nut)
 
+qc_nut <- qaqc(dat_nut,
+               qaqc_keep = c("0", "1", "-4"))
 ```
 
 ## Which values are flagged as \<MDL?
@@ -284,7 +291,7 @@ Note, this function needs to be used before the `qaqc()` function because the la
 
 ```{r}
 # cens_id function
-
+nut_cens <- cens_id(dat_nut)
 
 # create columns in dat_nut, using flag_type = "below"
 
