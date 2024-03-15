@@ -315,6 +315,7 @@ nut_cens <- cens_id(dat_nut)
 
 
 # and do the same for wq and met
+qc_wq <- qaqc(dat_wq)
 
 ```
 
@@ -322,6 +323,7 @@ Make sure that got rid of those wacky salinity values:
 
 ```{r}
 # by making a plot
+plot(sal ~ datetimestamp, data = qc_wq)
 ```
 
 # Summarizing data
@@ -332,6 +334,7 @@ Let's say you want monthly averages for your parameters.
 
 ```{r}
 # aggreswmp - create monthly_wq data frame
+monthly_wq <- aggreswmp(qc_wq, by = "months")
 
 
 # take a look with glimpse
@@ -355,13 +358,15 @@ The defaults for `aggreswmp` are to run on every parameter, calculating the mean
 # but we can tell it to
 
 # create mmax_wq data frame
+mmax_wq <- aggreswmp(qc_wq, by = "months",
+                     FUN = max, na.rm = TRUE)
 
 
 # look at it
-
+glimpse(mmax_wq)
 
 # plot it
-
+plot(sal ~ datetimestamp, data = mmax_wq, type = "b")
 ```
 
 Note, we can put both those lines (mean and max monthly salinities) on the same plot, and we will with `ggplot2`. But first, more `aggreswmp`.
