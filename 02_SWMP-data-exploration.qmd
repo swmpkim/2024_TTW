@@ -144,16 +144,21 @@ Loooook at the data! Base R's `plot()` function is great for initial data explor
 
 ```{r}
 # salinity time series
-
+plot(sal ~ datetimestamp, data = dat_wq)
 
 # temperature time series
-
+plot(temp ~ datetimestamp, data = dat_wq)
 
 # make the temp plot a line plot instead of points
-
+plot(temp ~ datetimestamp, data = dat_wq, type = "l")
 
 # make the line blue and add nice axis labels and a title
-
+plot(temp ~ datetimestamp, data = dat_wq,
+     type = "l",
+     col = "navyblue",
+     main = "Temp at GNDBHWQ",
+     xlab = "Date",
+     ylab = "Temp (C)")
 
 ```
 
