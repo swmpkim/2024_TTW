@@ -124,7 +124,10 @@ glimpse(dat_nut)
 And there are some different ways to see summaries:
 
 ```{r}
+summary(dat_nut)
 
+library(skimr)
+skim(dat_nut)
 ```
 
 ### Overall -
