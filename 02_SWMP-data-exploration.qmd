@@ -167,7 +167,9 @@ plot(temp ~ datetimestamp, data = dat_wq,
 ```{r}
 # can make other varieties of plot too,
 # like a histogram of water temperatures
-
+hist(dat_wq$temp,
+     col = "cadetblue3",
+     breaks = 30)
 
 # change some options
 # breaks, color, labels
@@ -182,21 +184,16 @@ For more information on how to subset in both base R and the tidyverse, check ou
 
 ```{r}
 # what are our column names again?
-
+names(dat_nut)
 
 
 # let's only keep a few -
-# datetimestamp, temp, spcond, sal, do_pct
-
-
-
-# and only a small amount of rows because my computer
-# got really bogged down with the whole dataset
-
-
-
-# we'll make a pairs plot with the first 1000 rows of the data frame
-
+dat_nut2 <- dat_nut |> 
+    select(datetimestamp,
+           po4f,
+           nh4f,
+           chla_n)
+pairs(dat_nut2)
 
 ```
 
@@ -221,7 +218,9 @@ We can turn things into dates fairly easily using the `lubridate` package. More 
 
 ```{r}
 # modify bhnut$date_time_stamp
+bhnut$date_time_stamp <- lubridate::mdy_hm(bhnut$date_time_stamp)
 
+bhnut$year <- lubridate::year(bhnut$date_time_stamp)
 ```
 
 Now we can finally make that same salinity time series plot:
