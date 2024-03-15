@@ -378,10 +378,19 @@ We're not necessarily interested in average precipitation within a month; we wan
 ```{r}
 # create daily_rain and monthly_rain data frames
 # don't forget to remove nas
+mmet <- aggreswmp(dat_met, 
+                  by = "months", 
+                  params = c("totprcp", "totpar"),
+                  FUN = sum, na.rm = TRUE)
 
+dmet <- aggreswmp(dat_met, 
+                  by = "days", 
+                  params = c("totprcp", "totpar"),
+                  FUN = sum, na.rm = TRUE)
 
 # another plot type - barplot!
-
+barplot(totprcp ~ datetimestamp,
+        data = mmet)
 
 ```
 
