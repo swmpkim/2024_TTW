@@ -78,13 +78,18 @@ As with most things in R, there are many ways to go about this. Let's examine a 
 Of the SWMPr-imported data frame.  
 
 ```{r}
+dim(bhnut)
+nrow(bhnut)
 
+names(bhnut)
 ```
 
 Contrast this with our other nutrient data frame.
 
 ```{r}
-
+names(dat_nut)
+head(dat_nut, 10)
+tail(dat_nut)
 ```
 
 ### Sidebar: janitor::clean_names()
@@ -92,7 +97,7 @@ Contrast this with our other nutrient data frame.
 We can easily clean up the names in the `read.csv` version thanks to the `janitor` package.
 
 ```{r}
-
+bhnut <- janitor::clean_names(bhnut)
 ```
 
 ## Checking column types
@@ -102,13 +107,16 @@ Names are different; values look the same. `SWMPr` automatically removed some co
 Something that's less obvious is what `SWMPr` did to the `datetimestamp` column. Let's investigate column types in a couple of different ways:
 
 ```{r}
-
+class(bhnut)
+class(bhnut$date_time_stamp)
+class(dat_nut$datetimestamp)
+class(dat_nut)
 ```
 
 The `glimpse()` function from the `dplyr` package gives an overview of all columns:
 
 ```{r}
-
+glimpse(dat_nut)
 ```
 
 ## General summaries
