@@ -408,7 +408,13 @@ We are using the `zoo` package to create a "year-month" format from our datetime
 # create monthly_wq2
 # create month column, and 
 # summarize salinity into mean and max; and temp into mean and max
-
+monthly_wq2 <- qc_wq |>
+    mutate(year = lubridate::year(datetimestamp),
+           month = lubridate::month(datetimestamp)) |> 
+    summarize(.by = c(year, month),
+              mean_sal = mean(sal, na.rm = TRUE),
+              max_sal = max(sal, na.rm = TRUE),
+              mean_temp = mean(temp, na.rm = TRUE))
 
 # take a look
 
