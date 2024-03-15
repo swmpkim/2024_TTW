@@ -417,10 +417,15 @@ monthly_wq2 <- qc_wq |>
               mean_temp = mean(temp, na.rm = TRUE))
 
 # take a look
+glimpse(monthly_wq2)
 
+library(lubridate)
+# plot mean monthly salinity 
+monthly_wq2 <- monthly_wq2 |> 
+    mutate(date = ymd(paste(year, month, "01",
+                        sep = "-")))
 
-# plot mean monthly salinity  
-
+plot(mean_sal ~ date, data = monthly_wq2, type = "b")
 ```
 
 
