@@ -471,6 +471,43 @@ ggplot(monthly_wq2) +
          y = "salinity")
 
 
+ggplot() +
+    geom_line(data = monthly_wq2,
+              aes(x = date,
+                  y = mean_sal)) +
+    geom_point(data = monthly_wq2,
+               aes(x = date,
+                  y = mean_sal)) +
+    labs(title = "mean monthly salinity",
+         x = "Date",
+         y = "salinity")
+
+
+
+ggplot() +
+    geom_line(data = monthly_wq,
+              aes(x = datetimestamp,
+                  y = sal,
+                  col = "mean")) +
+    geom_line(data = mmax_wq,
+               aes(x = datetimestamp,
+                  y = sal,
+                  col = "max")) +
+    labs(title = "monthly salinity",
+         x = "Date",
+         y = "salinity")
+
+
+ggplot(nut_cens) +
+    geom_point(aes(x = datetimestamp,
+                   y = no23f,
+                   col = c_no23f)) +
+    labs(title = "NO23 at gndbhnut",
+         x = "Date",
+         y = "NO23",
+         col = "below MDL?") +
+    theme_bw()
+
 
 # if we want to put points and lines on the graph to represent the same
 # data, we can put all of the identifying information in the top line
