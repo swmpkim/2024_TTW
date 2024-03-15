@@ -454,11 +454,24 @@ The `esquisse` package can get you started assembling ggplots in a point-and-cli
 
 ## Building a line graph
 
+
+
 Here, we are going to make a graph that includes lines for our monthly mean and max salinity values. We will construct it in a few different ways and start learning about the different ways to layer information together.
 
 Note in this code chunk, we also see how to assign labels to the graph - title, subtitle, and x- and y-axis labels.
 
 ```{r}
+ggplot(monthly_wq2) +
+    geom_line(aes(x = date,
+                  y = mean_sal)) +
+    geom_point(aes(x = date,
+                  y = mean_sal)) +
+    labs(title = "mean monthly salinity",
+         x = "Date",
+         y = "salinity")
+
+
+
 # if we want to put points and lines on the graph to represent the same
 # data, we can put all of the identifying information in the top line
 ggplot(monthly_wq2, aes(x = month, y = mean_sal)) +
